@@ -21,16 +21,12 @@ const CANDIDATE_SELECTOR = [
 
 const introKeywords = [
   /skip intro/i,
-  /skip opening/i,
-  /skip op/i,
   /skip recap/i
 ];
 
 const endingKeywords = [
-  /skip ending/i,
   /skip credits/i,
-  /skip outro/i,
-  /skip ed/i
+  /skip preview/i
 ];
 
 let settings = { ...defaults };
