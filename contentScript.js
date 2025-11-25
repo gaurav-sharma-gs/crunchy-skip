@@ -10,7 +10,7 @@ const defaults = {
 };
 
 const CLICK_DEBOUNCE_MS = 1200;
-const PERIODIC_SCAN_MS = 1500;
+const FALLBACK_SCAN_MS = 10000;
 const CANDIDATE_SELECTOR = [
   'button',
   '[role="button"]',
@@ -31,7 +31,7 @@ const endingKeywords = [
 
 let settings = { ...defaults };
 let lastClickAt = 0;
-let periodicHandle = null;
+let fallbackHandle = null;
 let observerActive = false;
 let mutationScheduled = false;
 const clickedTargets = new WeakSet();
@@ -155,6 +155,7 @@ function scanAndClick(reason = 'manual') {
     return true;
   }
 
+  scheduleFallbackScan();
   return false;
 }
 
@@ -164,7 +165,12 @@ function startObserving() {
   if (observerActive) return;
   const root = document.body || document.documentElement;
   if (!root) return;
-  observer.observe(root, { childList: true, subtree: true });
+  observer.observe(root, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    characterData: true
+  });
   observerActive = true;
   logDebug('Mutation observer started');
 }
@@ -175,16 +181,24 @@ function stopObserving() {
   observerActive = false;
 }
 
-function startPeriodicScan() {
-  if (periodicHandle) return;
-  periodicHandle = setInterval(() => scheduleScan('interval'), PERIODIC_SCAN_MS);
-  logDebug('Periodic scan scheduled');
+function scheduleFallbackScan() {
+  if (!settings.enabled) return;
+  if (fallbackHandle) {
+    clearTimeout(fallbackHandle);
+    fallbackHandle = null;
+  }
+  fallbackHandle = setTimeout(() => {
+    fallbackHandle = null;
+    if (!settings.enabled) return;
+    scheduleScan('fallback');
+    scheduleFallbackScan();
+  }, FALLBACK_SCAN_MS);
 }
 
-function stopPeriodicScan() {
-  if (!periodicHandle) return;
-  clearInterval(periodicHandle);
-  periodicHandle = null;
+function stopFallbackScan() {
+  if (!fallbackHandle) return;
+  clearTimeout(fallbackHandle);
+  fallbackHandle = null;
 }
 
 function applySettings(nextSettings) {
@@ -200,11 +214,11 @@ function applySettings(nextSettings) {
 
   if (settings.enabled) {
     startObserving();
-    startPeriodicScan();
     scheduleScan('settings');
+    scheduleFallbackScan();
   } else {
     stopObserving();
-    stopPeriodicScan();
+    stopFallbackScan();
   }
 
   logDebug('Settings applied', settings);
