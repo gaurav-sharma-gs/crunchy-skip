@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>crunchy-skip</title>
+    <style>
+      :root {
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      }
+      body {
+        margin: 0;
+        padding: 12px;
+        width: 320px;
+      }
+      h1 {
+        font-size: 18px;
+        margin: 0 0 8px;
+      }
+      .toggle {
+        width: 100%;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 12px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        color: #fff;
+        background: #6b6b6b;
+      }
+      .toggle.enable {
+        background: #22a852;
+      }
+      .toggle.disable {
+        background: #c53939;
+      }
+      fieldset {
+        border: none;
+        padding: 0;
+        margin: 12px 0 0;
+      }
+      fieldset:disabled {
+        opacity: 0.55;
+      }
+      label {
+        display: block;
+        margin: 6px 0;
+        font-size: 14px;
+      }
+      input[type='number'] {
+        width: 90px;
+        margin-left: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>crunchy-skip</h1>
+    <button id="toggleEnabled" class="toggle" type="button">Disable auto skip</button>
+    <fieldset>
+      <label><input type="checkbox" id="skipIntro" /> Skip Intro</label>
+      <label><input type="checkbox" id="skipEnding" /> Skip Credits</label>
+      <label><input type="checkbox" id="debug" /> Enable debug logging</label>
+      <label>Click delay (ms): <input type="number" id="clickDelayMs" min="0" step="50" /></label>
+    </fieldset>
+    <script src="popup.js"></script>
+  </body>
+</html>
