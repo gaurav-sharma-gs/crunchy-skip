@@ -1,54 +1,66 @@
-crunchy-skip
+Crunchy-Skip
 ============
 
-Chrome extension that automatically clicks Crunchyroll's "Skip Intro" and "Skip Credits" controls the moment they appear.
+[![Chrome Web Store – Crunchy-Skip](https://img.shields.io/chrome-web-store/v/gkkblgjjgfbddmpaehhicpfaapiepopj?label=Chrome%20Web%20Store%20%E2%80%93%20Crunchy-Skip&logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/crunchy-skip/gkkblgjjgfbddmpaehhicpfaapiepopj)
+
+
+Chrome extension that automatically clicks Crunchyroll's "Skip Intro" and "Skip Credits" controls as soon as they appear.
 
 Features
 --------
-- **Frame-aware detection** – content script now runs in every Crunchyroll frame, so player iframes are covered by default.
-- **Robust matching** – buttons are identified via aria-labels, titles, `data-testid`, `aria-labelledby`, and visible text (English + common shorthand variations).
-- **Debounced safe clicks** – defensive click helper prevents rapid repeat clicks and falls back to dispatched mouse events when needed.
-- **Configurable UX** – options page lets users toggle intro/ending skips separately, tweak click delay, and enable console debugging.
+- **Automatic skip** – detects skip intro/credits UI via aria-labels, titles, `data-testid`, `aria-labelledby`, and visible text.
+- **All frames covered** – content script runs in every Crunchyroll frame, so embedded players are handled.
+- **Immediate controls** – toolbar popup lets you enable/disable, toggle intro/credits separately, tweak click delay, and turn on debug logging; changes save instantly.
+- **Safe, debounced clicks** – guards against rapid repeats and falls back to dispatched mouse events if a native click fails.
 
-Unpacked Installation
+Installation
+------------
+- **From the Chrome Web Store:** visit the link above and click **Add to Chrome**.
+- **Unpacked:** go to `chrome://extensions`, enable **Developer mode**, choose **Load unpacked**, and select the `crunchy-skip` folder.
+
+Usage & Configuration
 ---------------------
-1. Go to `chrome://extensions` in a Chromium-based browser.
-2. Enable **Developer mode**.
-3. Click **Load unpacked** and select the `crunchy-skip` directory.
-4. Pin the extension if desired, then open a Crunchyroll episode to verify skipping occurs.
+1. Pin the extension (optional) and click the toolbar icon to open the popup.
+2. Use the **Enable auto skip** button to turn the feature on/off instantly.
+3. Toggle **Skip Intro** and **Skip Credits** independently, adjust **Click delay (ms)**, and optionally enable **Debug logging** for console traces.
+4. Settings persist immediately via `chrome.storage` and apply live to any open Crunchyroll tabs.
 
-Publishing Checklist
---------------------
-1. Update `version` in `manifest.json` before uploading a new package.
-2. Run through the Quick Test Checklist (below) to validate skipping behaviour.
-3. Zip the folder contents (without the parent directory) and upload to the Chrome Web Store dashboard.
-4. Provide the README contents (or a subset) as the listing description and include the icons from `/icons`.
-
-Configuration
--------------
-- **Enable auto skip** – master toggle for the content script.
-- **Skip Intro / Skip Credits** – control each action independently.
-- **Click delay (ms)** – add a delay before triggering the click to accommodate slow UIs.
-- **Debug logging** – when enabled, the content script emits detailed logs in the active frame's console.
+How It Works
+------------
+- A manifest v3 content script injects on all `*.crunchyroll.com` pages (all frames).
+- The script scans for candidate buttons on DOM mutations and via a 1.5s periodic scan, classifies them by text/labels, and clicks with an optional delay (default 200ms).
+- Debug mode logs actions prefixed with `crunchy-skip:` in the frame where playback occurs.
 
 Quick Test Checklist
 --------------------
-1. Load the extension unpacked.
-2. Open DevTools on the Crunchyroll player iframe and check for `crunchy-skip: Settings applied` (only if debug logging is enabled).
-3. Start playback and wait for the Skip UI: it should be clicked automatically within ~1.5s of appearing.
-4. If it fails, temporarily raise the click delay, ensure the extension is enabled, and inspect console output (enable debug logging in Options for verbose traces).
-5. Advanced: run `window.__cr_autoskip.forceScan()` in the iframe console to trigger an immediate scan, or inspect `window.__cr_autoskip.findCandidates()` for matched elements.
+1. Install (store or unpacked) and open a Crunchyroll episode.
+2. In the player frame console, look for `crunchy-skip: Settings applied` if debug logging is enabled.
+3. When the Skip UI appears, it should be clicked automatically (typically within 0–1.5s plus any configured delay).
+4. If it fails, verify the extension is enabled in the popup, try increasing the click delay, and review debug logs.
+5. Advanced: run `window.__cr_autoskip.forceScan()` in the player frame console to trigger an immediate scan.
+
+Local / Dev Testing
+--------------------
+1. Enable **Developer mode** in `chrome://extensions` and load the unpacked folder (`crunchy-skip`).
+2. In DevTools Console on the player iframe, enable debug logging via the popup and watch for `crunchy-skip:` logs.
+3. Use `window.__cr_autoskip.forceScan()` to force a scan, or `window.__cr_autoskip.findCandidates()` to see what the script detects.
+4. Adjust `contentScript.js` constants locally (e.g., `PERIODIC_SCAN_MS`, keyword arrays), then click **Reload** on the extensions page and refresh the Crunchyroll tab to retest.
+5. If the popup UI changes, reload the extension so the new HTML/JS is picked up before testing.
 
 Troubleshooting
 ---------------
-- Crunchyroll may change markup; update the keyword arrays in `contentScript.js` if new button text appears.
-- If you need faster detection, tweak `PERIODIC_SCAN_MS` (default 1500ms) in the script, but keep the debounce in place to avoid duplicate clicks.
-- Player UI issues are often iframe-related—verify the logs inside the actual video frame, not the parent page.
+- If Crunchyroll changes button text, update `introKeywords`/`endingKeywords` in `contentScript.js`.
+- For slower/faster cadence, adjust `PERIODIC_SCAN_MS` (default 1500ms) but keep the debounce to avoid duplicate clicks.
+- Always inspect logs in the actual player iframe; the parent page console won’t show frame-level logs.
 
 Project Structure
 -----------------
-- `manifest.json` – MV3 manifest (with `all_frames` enabled for the content script).
-- `contentScript.js` – main detection and click logic.
-- `options.html` / `options.js` – lightweight settings UI stored via `chrome.storage.sync`.
-- `icons/` – extension icon set (16/48/128 px).
-- `privacy-policy.md` – text of the privacy policy you can host on GitHub Pages or link directly in the Chrome Web Store listing.
+- `manifest.json` – MV3 manifest with all-frames content script and action popup.
+- `popup.html` / `popup.js` – toolbar UI and live settings persistence.
+- `contentScript.js` – detection and click logic.
+- `icons/` – extension icons.
+- `privacy-policy.md` – privacy policy for the store listing.
+
+Feedback & Requests
+-------------------
+- Bugs or feature requests: please file an issue on GitHub with a short description of the problem and the behavior you’d like.
