@@ -7,11 +7,14 @@
     <style>
       :root {
         font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        color-scheme: light dark;
       }
       body {
         margin: 0;
         padding: 12px;
         width: 320px;
+        background: #fff;
+        color: #111;
       }
       h1 {
         font-size: 18px;
@@ -50,6 +53,34 @@
       input[type='number'] {
         width: 90px;
         margin-left: 8px;
+        background: #fff;
+        color: inherit;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+        padding: 2px 4px;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #111;
+          color: #f1f1f1;
+        }
+        .toggle {
+          background: #3d3d3d;
+        }
+        .toggle.enable {
+          background: #1b8a45;
+        }
+        .toggle.disable {
+          background: #a82d2d;
+        }
+        fieldset:disabled {
+          opacity: 0.45;
+        }
+        input[type='number'] {
+          background: #1e1e1e;
+          border-color: rgba(255, 255, 255, 0.2);
+          color: #f1f1f1;
+        }
       }
     </style>
   </head>
