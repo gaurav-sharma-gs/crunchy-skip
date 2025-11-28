@@ -26,7 +26,7 @@ function applySettings(values) {
   const toggleButton = $('toggleEnabled');
   if (toggleButton) {
     const enabled = currentSettings.enabled;
-    toggleButton.textContent = enabled ? 'Disable auto skip' : 'Enable auto skip';
+    toggleButton.textContent = enabled ? 'Disable auto-skip' : 'Enable auto-skip';
     toggleButton.classList.toggle('disable', enabled);
     toggleButton.classList.toggle('enable', !enabled);
   }

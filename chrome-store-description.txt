@@ -1,0 +1,41 @@
+🚀 Skip the boring parts and get straight to the action!
+
+Crunchy-Skip automatically clicks 'Skip Intro' and 'Skip Credits' buttons the moment they appear on Crunchyroll, so you never have to wait or lift a finger.
+
+⚡ KEYBOARD SHORTCUT
+Press Alt+Shift+S (Option+Shift+S on Mac) anywhere on Crunchyroll to instantly toggle auto-skip on/off. Perfect for quick control during your viewing session!
+
+🎯 SMART DETECTION
+• Works with all Crunchyroll skip buttons (Skip Intro, Skip Credits, Skip Recap, Skip Preview)
+• Detects buttons by text, aria-labels, and visual appearance
+• Handles embedded players and all page frames
+• Debounced clicking prevents duplicate actions
+
+⚙️ FULLY CUSTOMIZABLE
+• Toggle Skip Intro and Skip Credits independently
+• Adjust click delay (0-2000ms) for slower connections
+• Enable debug mode for troubleshooting
+• Settings sync instantly across all Crunchyroll tabs
+
+🔧 DEVELOPER-FRIENDLY
+• Open source on GitHub
+• No tracking, no data collection
+• Lightweight and efficient
+• Works with all keyboard layouts
+
+Perfect for anime fans who want to binge-watch without interruptions!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📱 USAGE:
+1. Install the extension
+2. Go to any Crunchyroll episode
+3. Skip buttons will be clicked automatically
+4. Use Alt+Shift+S for quick toggle control
+
+🐛 BUGS & FEATURES:
+Report issues or suggest improvements on GitHub:
+https://github.com/gaurav-sharma-gs/crunchy-skip
+
+⭐ SUPPORT:
+If you love Crunchy-Skip, please leave a review on the Chrome Web Store!

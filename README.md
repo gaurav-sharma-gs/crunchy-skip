@@ -11,6 +11,7 @@ Features
 - **Automatic skip** – detects skip intro/credits UI via aria-labels, titles, `data-testid`, `aria-labelledby`, and visible text.
 - **All frames covered** – content script runs in every Crunchyroll frame, so embedded players are handled.
 - **Immediate controls** – toolbar popup lets you enable/disable, toggle intro/credits separately, tweak click delay, and turn on debug logging; changes save instantly.
+- **Keyboard shortcut** – press `Alt+Shift+S` (or `Option+Shift+S`) on any Crunchyroll page to quickly toggle auto-skip on/off with visual feedback. Works on both Mac and Windows with all keyboard layouts.
 - **Safe, debounced clicks** – guards against rapid repeats and falls back to dispatched mouse events if a native click fails.
 
 Installation
@@ -22,8 +23,9 @@ Usage & Configuration
 ---------------------
 1. Pin the extension (optional) and click the toolbar icon to open the popup.
 2. Use the **Enable auto skip** button to turn the feature on/off instantly.
-3. Toggle **Skip Intro** and **Skip Credits** independently, adjust **Click delay (ms)**, and optionally enable **Debug logging** for console traces.
-4. Settings persist immediately via `chrome.storage` and apply live to any open Crunchyroll tabs.
+3. **Keyboard shortcut**: Press `Alt+Shift+S` (or `Option+Shift+S`) on any Crunchyroll page to quickly toggle auto-skip. A notification will appear showing the current status.
+4. Toggle **Skip Intro** and **Skip Credits** independently, adjust **Click delay (ms)**, and optionally enable **Debug logging** for console traces.
+5. Settings persist immediately via `chrome.storage` and apply live to any open Crunchyroll tabs.
 
 How It Works
 ------------
@@ -57,7 +59,11 @@ Project Structure
 -----------------
 - `manifest.json` – MV3 manifest with all-frames content script and action popup.
 - `popup.html` / `popup.js` – toolbar UI and live settings persistence.
-- `contentScript.js` – detection and click logic.
+- `contentScript.js` – main orchestrator that coordinates all modules.
+- `settingsManager.js` – settings and storage management.
+- `skipDetection.js` – core skip button detection and clicking logic.
+- `keyboardShortcut.js` – keyboard shortcut handling (Alt+Shift+S).
+- `visualFeedback.js` – notification and visual feedback system.
 - `icons/` – extension icons.
 - `privacy-policy.md` – privacy policy for the store listing.
 
