@@ -26,7 +26,8 @@ function applySettings(values) {
   const toggleButton = $('toggleEnabled');
   if (toggleButton) {
     const enabled = currentSettings.enabled;
-    toggleButton.textContent = enabled ? 'Disable auto-skip' : 'Enable auto-skip';
+    const hint = ' (Alt+Shift+S / \u2325\u21E7S)'; // ⌥⇧S for macOS
+    toggleButton.textContent = enabled ? `Disable auto-skip${hint}` : `Enable auto-skip${hint}`;
     toggleButton.classList.toggle('disable', enabled);
     toggleButton.classList.toggle('enable', !enabled);
   }
