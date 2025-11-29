@@ -7,6 +7,7 @@ Skip the fluff, watch the fun! Crunchy-Skip is the ultimate Chrome extension for
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔥 NEW: Press Alt+Shift+S (Option+Shift+S on Mac) anywhere on Crunchyroll for instant auto-skip toggle!  
 🔥 NEW: Press Alt+Shift+P (Option+Shift+P on Mac) to toggle Picture-in-Picture on the current video—no popup needed.
+🔥 NEW: Dedicated Picture-in-Picture button placed beside Settings for one-click PiP; show/hide it from the popup.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎯 INTELLIGENT DETECTION
@@ -22,6 +23,7 @@ Skip the fluff, watch the fun! Crunchy-Skip is the ultimate Chrome extension for
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✓ Enable/disable auto-skip instantly
 ✓ Show/hide the Picture-in-Picture button from the popup
+✓ One-click Picture-in-Picture toggle directly on the player
 ✓ Toggle Skip Intro and Skip Credits separately  
 ✓ Adjust click delay for your connection speed
 ✓ Enable debug logging for troubleshooting

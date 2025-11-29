@@ -37,6 +37,23 @@ function applySettings(nextSettings) {
   settings = { ...defaults, ...sanitized };
 
   logDebug('Settings applied', settings);
+
+  // Notify dependent modules
+  try {
+    window.__cr_skipDetection?.handleSettingsChange?.(settings);
+  } catch (err) {
+    console.warn('crunchy-skip: skip detection update failed', err);
+  }
+
+  try {
+    if (settings.pipEnabled) {
+      window.__cr_pip?.start?.();
+    } else {
+      window.__cr_pip?.stop?.();
+    }
+  } catch (err) {
+    console.warn('crunchy-skip: PiP update failed', err);
+  }
   
   return settings;
 }

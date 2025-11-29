@@ -27,30 +27,8 @@ function initializeExtension() {
         window.__cr_settings.loadSettings();
         window.__cr_settings.listenForSettingChanges();
         
-        // Set up proper settings change callback to notify skip detection
-        const originalApplySettings = window.__cr_settings.applySettings;
-        window.__cr_settings.applySettings = function(newSettings) {
-          const result = originalApplySettings.call(this, newSettings);
-          // Notify skip detection module
-          if (window.__cr_skipDetection && window.__cr_skipDetection.handleSettingsChange) {
-            window.__cr_skipDetection.handleSettingsChange(result);
-          }
-          // Toggle PiP UI based on setting
-          if (result?.pipEnabled) {
-            window.__cr_pip?.start?.();
-          } else {
-            window.__cr_pip?.stop?.();
-          }
-          return result;
-        };
-        
         // Start keyboard listeners
         window.__cr_keyboard.addKeyboardListeners();
-
-        // Start the Picture-in-Picture button if enabled
-        if (window.__cr_settings?.getSettings?.().pipEnabled) {
-          window.__cr_pip?.start?.();
-        }
         
         logDebug('Content script initialized successfully');
       } catch (error) {
