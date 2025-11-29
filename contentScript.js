@@ -35,11 +35,22 @@ function initializeExtension() {
           if (window.__cr_skipDetection && window.__cr_skipDetection.handleSettingsChange) {
             window.__cr_skipDetection.handleSettingsChange(result);
           }
+          // Toggle PiP UI based on setting
+          if (result?.pipEnabled) {
+            window.__cr_pip?.start?.();
+          } else {
+            window.__cr_pip?.stop?.();
+          }
           return result;
         };
         
         // Start keyboard listeners
         window.__cr_keyboard.addKeyboardListeners();
+
+        // Start the Picture-in-Picture button if enabled
+        if (window.__cr_settings?.getSettings?.().pipEnabled) {
+          window.__cr_pip?.start?.();
+        }
         
         logDebug('Content script initialized successfully');
       } catch (error) {
@@ -61,26 +72,4 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initializeExtension);
 } else {
   initializeExtension();
-}
-
-// Public API for debugging and manual control
-if (typeof window !== 'undefined') {
-  window.__cr_autoskip = {
-    forceScan: () => window.__cr_skipDetection?.forceScan?.(),
-    get settings() {
-      return window.__cr_settings?.getSettings?.() || {};
-    },
-    findCandidates: () => window.__cr_skipDetection?.getCandidateElements?.() || [],
-    toggleShortcut: () => {
-      const currentSettings = window.__cr_settings?.getSettings?.();
-      if (currentSettings) {
-        const newEnabled = !currentSettings.enabled;
-        window.__cr_settings?.updateSetting?.('enabled', newEnabled);
-        window.__cr_feedback?.showStatus?.(newEnabled) ||
-          window.__cr_feedback?.showInfo?.(`Crunchy-Skip: Auto-skip ${newEnabled ? 'Enabled' : 'Disabled'}`);
-        return newEnabled;
-      }
-      return false;
-    }
-  };
 }

@@ -5,7 +5,8 @@ const defaults = {
   skipIntro: true,
   skipEnding: true,
   clickDelayMs: 200,
-  debug: false
+  debug: false,
+  pipEnabled: true
 };
 
 let settings = { ...defaults };
@@ -29,7 +30,8 @@ function applySettings(nextSettings) {
     skipIntro: nextSettings.skipIntro !== false,
     skipEnding: nextSettings.skipEnding !== false,
     clickDelayMs: Number.isFinite(nextSettings.clickDelayMs) ? nextSettings.clickDelayMs : defaults.clickDelayMs,
-    debug: Boolean(nextSettings.debug)
+    debug: Boolean(nextSettings.debug),
+    pipEnabled: nextSettings.pipEnabled !== false
   };
 
   settings = { ...defaults, ...sanitized };

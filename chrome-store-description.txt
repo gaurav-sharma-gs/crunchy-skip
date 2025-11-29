@@ -2,8 +2,9 @@
 
 Crunchy-Skip automatically clicks 'Skip Intro' and 'Skip Credits' buttons the moment they appear on Crunchyroll, so you never have to wait or lift a finger.
 
-⚡ KEYBOARD SHORTCUT
-Press Alt+Shift+S (Option+Shift+S on Mac) anywhere on Crunchyroll to instantly toggle auto-skip on/off. Perfect for quick control during your viewing session!
+⚡ KEYBOARD SHORTCUTS
+• Alt+Shift+S (Option+Shift+S on Mac) toggles auto-skip on/off instantly
+• Alt+Shift+P (Option+Shift+P on Mac) toggles Picture-in-Picture on the current video
 
 🎯 SMART DETECTION
 • Works with all Crunchyroll skip buttons (Skip Intro, Skip Credits, Skip Recap, Skip Preview)
@@ -15,6 +16,7 @@ Press Alt+Shift+S (Option+Shift+S on Mac) anywhere on Crunchyroll to instantly t
 • Toggle Skip Intro and Skip Credits independently
 • Adjust click delay (0-2000ms) for slower connections
 • Enable debug mode for troubleshooting
+• Show/hide the Picture-in-Picture button from the popup
 • Settings sync instantly across all Crunchyroll tabs
 
 🔧 DEVELOPER-FRIENDLY

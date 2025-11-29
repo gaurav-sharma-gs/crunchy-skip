@@ -11,7 +11,8 @@ Features
 - **Automatic skip** – detects skip intro/credits UI via aria-labels, titles, `data-testid`, `aria-labelledby`, and visible text.
 - **All frames covered** – content script runs in every Crunchyroll frame, so embedded players are handled.
 - **Immediate controls** – toolbar popup lets you enable/disable, toggle intro/credits separately, tweak click delay, and turn on debug logging; changes save instantly.
-- **Keyboard shortcut** – press `Alt+Shift+S` (or `Option+Shift+S`) on any Crunchyroll page to quickly toggle auto-skip on/off with visual feedback. Works on both Mac and Windows with all keyboard layouts.
+- **Keyboard shortcuts** – press `Alt+Shift+S` to toggle auto-skip and `Alt+Shift+P` to toggle the Picture-in-Picture button. Both provide visual feedback and work on all keyboard layouts.
+- **Picture-in-Picture Button** - Adds a button to the video player to easily toggle Picture-in-Picture mode. This can be enabled or disabled from the extension's popup.
 - **Safe, debounced clicks** – guards against rapid repeats and falls back to dispatched mouse events if a native click fails.
 
 Installation
@@ -23,7 +24,7 @@ Usage & Configuration
 ---------------------
 1. Pin the extension (optional) and click the toolbar icon to open the popup.
 2. Use the **Enable auto skip** button to turn the feature on/off instantly.
-3. **Keyboard shortcut**: Press `Alt+Shift+S` (or `Option+Shift+S`) on any Crunchyroll page to quickly toggle auto-skip. A notification will appear showing the current status.
+3. **Keyboard shortcuts**: Press `Alt+Shift+S` (or `Option+Shift+S`) to toggle auto-skip, and `Alt+Shift+P` to toggle the Picture-in-Picture button. A notification will appear showing the current status.
 4. Toggle **Skip Intro** and **Skip Credits** independently, adjust **Click delay (ms)**, and optionally enable **Debug logging** for console traces.
 5. Settings persist immediately via `chrome.storage` and apply live to any open Crunchyroll tabs.
 
@@ -39,15 +40,13 @@ Quick Test Checklist
 2. In the player frame console, look for `crunchy-skip: Settings applied` if debug logging is enabled.
 3. When the Skip UI appears, it should be clicked automatically (typically within 0–1.5s plus any configured delay).
 4. If it fails, verify the extension is enabled in the popup, try increasing the click delay, and review debug logs.
-5. Advanced: run `window.__cr_autoskip.forceScan()` in the player frame console to trigger an immediate scan.
 
 Local / Dev Testing
 --------------------
 1. Enable **Developer mode** in `chrome://extensions` and load the unpacked folder (`crunchy-skip`).
 2. In DevTools Console on the player iframe, enable debug logging via the popup and watch for `crunchy-skip:` logs.
-3. Use `window.__cr_autoskip.forceScan()` to force a scan, or `window.__cr_autoskip.findCandidates()` to see what the script detects.
-4. Adjust `contentScript.js` constants locally (e.g., `PERIODIC_SCAN_MS`, keyword arrays), then click **Reload** on the extensions page and refresh the Crunchyroll tab to retest.
-5. If the popup UI changes, reload the extension so the new HTML/JS is picked up before testing.
+3. Adjust `contentScript.js` constants locally (e.g., keyword arrays), then click **Reload** on the extensions page and refresh the Crunchyroll tab to retest.
+4. If the popup UI changes, reload the extension so the new HTML/JS is picked up before testing.
 
 Troubleshooting
 ---------------
@@ -62,7 +61,8 @@ Project Structure
 - `contentScript.js` – main orchestrator that coordinates all modules.
 - `settingsManager.js` – settings and storage management.
 - `skipDetection.js` – core skip button detection and clicking logic.
-- `keyboardShortcut.js` – keyboard shortcut handling (Alt+Shift+S).
+- `pipButton.js` - creates and manages the Picture-in-Picture button on the video player.
+- `keyboardShortcut.js` – keyboard shortcut handling (Alt+Shift+S and Alt+Shift+P).
 - `visualFeedback.js` – notification and visual feedback system.
 - `icons/` – extension icons.
 - `privacy-policy.md` – privacy policy for the store listing.

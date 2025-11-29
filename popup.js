@@ -1,4 +1,4 @@
-const defaults = { enabled: true, skipIntro: true, skipEnding: true, clickDelayMs: 200, debug: false };
+const defaults = { enabled: true, skipIntro: true, skipEnding: true, clickDelayMs: 200, debug: false, pipEnabled: true };
 let currentSettings = { ...defaults };
 
 function $(id) {
@@ -22,6 +22,8 @@ function applySettings(values) {
   $('skipEnding').checked = currentSettings.skipEnding;
   $('debug').checked = currentSettings.debug;
   $('clickDelayMs').value = currentSettings.clickDelayMs;
+  const pipToggle = $('pipEnabled');
+  if (pipToggle) pipToggle.checked = currentSettings.pipEnabled;
 
   const toggleButton = $('toggleEnabled');
   if (toggleButton) {
@@ -84,6 +86,13 @@ function bindEvents() {
       persist({ [id]: el.checked });
     });
   });
+
+  const pipToggle = $('pipEnabled');
+  if (pipToggle) {
+    pipToggle.addEventListener('change', () => {
+      persist({ pipEnabled: pipToggle.checked });
+    });
+  }
 
   const delayInput = $('clickDelayMs');
   if (delayInput) {
